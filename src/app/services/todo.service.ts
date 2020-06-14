@@ -7,8 +7,6 @@ import { ModalService } from './modal.service';
 })
 
 export class TodoService {
-  title: string;
-  todoTitle: string;
   todoId: number;
   todoList: Array<ITodo> = [
     { id: 1, title: 'Install Angular CLI', description: '' }
@@ -27,17 +25,15 @@ export class TodoService {
       description: ''
     });
 
-    // resets our todoTitle variable to an empty string and add 1 to id
-    this.todoTitle = '';
+    // add 1 to id
     this.todoId++;
   }
-  async deleteTodo(todo: any) {
 
+  async deleteTodo(todo: any) {
     const result = await this.modalService.show();
     if (result === 'yes') {
       const index = this.todoList.findIndex(todoItem => todoItem === todo);
       this.todoList.splice(index, 1);
     }
-
   }
 }
