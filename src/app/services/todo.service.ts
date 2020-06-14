@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ITodo } from '../interfaces/itodo';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalComponent } from '../modal/modal.component';
+import { ModalService } from './modal.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +14,7 @@ export class TodoService {
     { id: 1, title: 'Install Angular CLI', description: '' }
   ];
 
-  constructor(private ngbModal: NgbModal) { }
+  constructor(private modalService: ModalService) { }
 
   getTodos() {
     return this.todoList;
@@ -33,16 +32,12 @@ export class TodoService {
     this.todoId++;
   }
   async deleteTodo(todo: any) {
-    const modal = this.ngbModal.open(ModalComponent);
-    const modalComponent: ModalComponent = modal.componentInstance;
-    modalComponent.modalInstance = modal;
 
-    const result = await modal.result;
+    const result = await this.modalService.show();
     if (result === 'yes') {
       const index = this.todoList.findIndex(todoItem => todoItem === todo);
       this.todoList.splice(index, 1);
     }
 
   }
-
 }
